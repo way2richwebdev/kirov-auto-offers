@@ -1,0 +1,1 @@
+{"name":"kirov-auto-offers","version":"1.0.0","private":true,"scripts":{"build":"node build.mjs","check":"node check.mjs"},"type":"module"}
