@@ -7,7 +7,6 @@
 - `formula-avto.html` — Формула Авто
 - `leotech.html` — ЛеоТех
 - `atmosfera.html` — Атмосфера
-- `index.html` — каталог концепций
 
 ## Сборка
 
