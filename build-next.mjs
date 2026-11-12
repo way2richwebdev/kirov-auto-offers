@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+const shops = [
+ {slug:'komsomolets',name:'Комсомолец',type:'Автотехцентр',heading:'От осмотра ходовой до ремонта',intro:'Диагностика, тормоза, развал-схождение и замена сцепления на Комсомольской.',address:'Комсомольская улица, 50/4',phone:'+7 (8332) 22-29-01',email:'komsomolets50@mail.ru',social:[['ВКонтакте','https://vk.ru/komsomolets43']],id:'70000001030926376',services:[['Осмотр ходовой части','500'],['Замена тормозных колодок','1 000'],['Развал-схождение','от 1 500'],['Эндоскопия цилиндров','от 2 000'],['Замена тормозных дисков','2 720'],['Замена сцепления','от 10 800']],alt:['Автомобиль на подъёмнике','Тормозной диск','Механик осматривает двигатель']},
+ {slug:'2rychaga',name:'2Рычага',type:'Автосервис',heading:'Узнайте, в каком состоянии ваш автомобиль',intro:'Осмотр перед покупкой или продажей, диагностика и ремонт ходовой части.',address:'Хлебозаводской проезд, 11а',phone:'+7 (8332) 76-05-04',extra:'+7 912 735-66-77',email:'twolever43@yandex.ru',social:[],id:'70000001118560241',services:[['Оценка состояния автомобиля','3 000'],['Диагностика ходовой части','3 000'],['Ремонт ходовой части','3 000']],alt:['Осмотр автомобиля на подъёмнике','Рычаг подвески','Диагностика автомобиля с планшетом']},
+ {slug:'garage-555',name:'#гараж_555',type:'Автосервис',heading:'Обслуживание и ремонт на Лепсе',intro:'Замена масла, расходные материалы и ремонт легковых автомобилей. Запись по телефону или в мессенджере.',address:'улица Лепсе, 14г',phone:'+7 (8332) 45-65-55',extra:'+7 922 995-65-55',social:[['Telegram','https://t.me/+79229956555'],['WhatsApp','https://wa.me/79229956555'],['ВКонтакте','https://vk.ru/garage_555']],id:'70000001030205220',services:[['Аппаратная замена масла','3 000'],['Ремонт легковых автомобилей','3 000']],alt:['Автомобиль в ремонтном боксе','Замена масла','Работа механика под автомобилем']}
+];
+for (const [row,s] of shops.entries()) {
+ const tel = phone => 'tel:+' + phone.replace(/\D/g,'');
+ const address = 'Киров, '+s.address;
+ const query=encodeURIComponent(address);
+ const map='https://yandex.ru/map-widget/v1/?text='+query+'&z=17';
+ const pic=(i)=>`<figure class="photo photo-${i}" role="img" aria-label="${s.alt[i]}" style="--x:${i*50}%;--y:${row*50}%"></figure>`;
+ const prices=s.services.map(([name,price])=>`<li><span>${name}</span><strong>${price} ₽</strong></li>`).join('');
+ const contact=`<section id="contacts" class="contacts"><div><h2>Как нас найти</h2><address>${address}</address><div class="links"><a href="${tel(s.phone)}">${s.phone}</a>${s.extra?`<a href="${tel(s.extra)}">${s.extra}</a>`:''}${s.email?`<a href="mailto:${s.email}">${s.email}</a>`:''}${s.social.map(([label,url])=>`<a href="${url}">${label}</a>`).join('')}</div><a class="cta" href="https://yandex.ru/maps/?text=${query}">Открыть в Яндекс Картах</a></div><iframe title="Яндекс Карта — ${address}" src="${map}" loading="lazy" allowfullscreen></iframe></section>`;
+ const hero=`<section class="hero"><div class="intro"><p class="location">${s.type} · Киров</p><h1>${s.heading}</h1><p class="lead">${s.intro}</p><a class="cta" href="${tel(s.phone)}">Позвонить и записаться</a></div>${pic(0)}</section>`;
+ const service=`<section id="services" class="services"><div><h2>Услуги и цены</h2><ul>${prices}</ul></div><div class="detail-photos">${pic(1)}${pic(2)}</div></section>`;
+ fs.writeFileSync(s.slug+'.html',`<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${s.name} — ${s.type} в Кирове</title><meta name="description" content="${s.intro}"><link rel="stylesheet" href="next-shops.css"></head>
+<body class="theme-${row}"><header><a class="brand" href="#">${s.name}</a><nav aria-label="Навигация"><a href="#services">Услуги</a><a href="#contacts">Контакты</a></nav><a class="header-phone" href="${tel(s.phone)}">${s.phone}</a></header><main>${hero}${service}${contact}</main><footer><strong>${s.name}</strong><a href="https://2gis.ru/kirov/firm/${s.id}">Карточка в 2ГИС</a></footer></body></html>`);
+}
