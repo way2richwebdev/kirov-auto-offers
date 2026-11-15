@@ -29,7 +29,7 @@ address{font-style:normal;font-size:1.15rem}
 .links{display:flex;flex-wrap:wrap;gap:12px 18px;margin:18px 0 24px}
 iframe{width:100%;height:340px;border:0;border-radius:var(--radius)}
 footer{border-top:1px solid var(--line);border-bottom:0}
-.theme-0{--bg:#f7f1e6;--ink:#251e18;--panel:#e9dec9;--line:#d7c9b5;--accent:#ad4b20;--tag:#843818;--button:#fff;--radius:4px;--font:Rubik}
+.theme-0{--bg:#191715;--ink:#f0e9e0;--panel:#27221e;--line:#483d34;--accent:#955439;--tag:#d4a98e;--button:#fff;--radius:4px;--font:Rubik}
 .theme-0 .hero{grid-template-columns:1fr 1.12fr}
 .theme-0 .detail-photos{grid-template-columns:1fr;gap:12px}
 .theme-0 .detail-photos .photo{aspect-ratio:2.25}
